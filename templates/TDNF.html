@@ -14,6 +14,15 @@
         padding-right: 6rem;
       }
 
+      #textDiv {
+        height: 100px;
+        background: white;
+        margin: 10px 0px;
+        padding: 5px;
+        border: solid 1px black;
+        padding-right: 6rem;
+      }
+
       button {
         width: 50px;
         height: 50px;
@@ -50,15 +59,13 @@
       <section class="py-5 text-center container">
         <div class="row">
           <div class="col-lg-8 col-md-12 mx-auto">
-            <h1 class="fw-light">Алгебра логики</h1>
-            <!-- {#                <p class="lead text-muted">Теория кодирования - это изучение свойств кодов и их соответствующей#}
-{#                    пригодности для конкретных приложений. Коды используются для сжатия данных, криптографии,#}
-{#                    обнаружения и исправления ошибок, передачи и хранения данных.</p>#}
-{#                <p class="lead text-muted">В данном разделе были реализованы вычислители по следующим алгоритмам:</p>#}
-{#                <p class="lead text-muted" style="margin-bottom: 0">1) Коды с минимальной избыточностью(а точнее код#}
-{#                    Хаффмана)</p>#}
-{#                <p class="lead text-muted">2) Самокорректирующиеся коды Хэмминга</p>#}
-{#                <p class="lead text-muted">Для перехода на определённый вычислитель, выберите ниже нужный алгоритм</p>#} -->
+            <h1 class="fw-light">Тупиковая ДНФ</h1>
+                <img src="../static/img/TDNF.jpg" alt=”определение ТДНФ” width="100%">
+{#              <p class="lead text-muted"> </p>#}
+{#                <p class="lead text-muted" style="margin-bottom: 0"> </p>#}
+{#                <p class="lead text-muted" style="margin-bottom: 0"> </p>#}
+{#                <p class="lead text-muted" style="margin-bottom: 0"> </p>#}
+{#                <p class="lead text-muted" style="margin-bottom: 0"> </p>#}
           </div>
         </div>
       </section>
@@ -67,21 +74,23 @@
         <div class="container">
           <!-- code here -->
 
-          <form action="/TDNF/" method="post">
+          <form action="/TDNF/" method="post" class="mb-5">
             {% csrf_token %}
-            <div class="d-flex flex-column">
-              <div class="position-relative w-100">
-                <label for="textLine"></label
-                ><input
+            <div class="d-flex flex-column position-relative">
+              <div id="textDiv"></div>
+              <div class="w-100">
+                <label for="textLine"></label>
+                <input
                   id="textLine"
                   name="condition"
                   value="{{ current_condition }}"
                   class="w-100"
                   readonly
+                  type="hidden"
                 />
                 <button
                   class="position-absolute"
-                  style="top: 28%; right: 2%"
+                  style="top: 14%; right: 2%"
                   type="submit"
                 >
                   =
@@ -189,19 +198,18 @@
 {#                    {% endfor %}#}
 {#                </tr>#}
 {#            </table>#} -->
-          <div>
-            <p>{{ TDNF_context.result }}</p>
+          <div class="alert alert-secondary" role="alert">
+            {{ TDNF_context.result }}
           </div>
         </div>
       </div>
     </main>
 
-{#    <div class="container">X <sub>2</sub></div>#}
-
     <footer class="text-muted py-5">
       <div class="container">
         <p class="float-end mb-1">
-          <a href="#" class="link-secondary">Контакты</a>
+            <input type="button" onclick="history.back();" value="Назад"  class="link-secondary"/>
+{#          <a href="#" class="link-secondary">Контакты</a>#}
         </p>
         <p class="mb-1">Сайт находится в разработке!</p>
       </div>
