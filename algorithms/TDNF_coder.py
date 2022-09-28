@@ -1,3 +1,6 @@
+import re
+
+
 def scan_dnf(file_path: str):
     f = open(file_path, 'r')
     a = f.read()
@@ -110,74 +113,65 @@ def get_tupik_dnfs(dnfs: list):
 
 
 def reformat_cond(cond: str):
-    n = 0
     k = cond.count("∨") + 1
-    vars = {"X": 0, "Y": 0, "Z": 0, "T": 0}
-    for key, value in vars.items():
-        if cond.count(key):
-            vars[key] = cond.count(key)
-            n += 1
-    result = str(n) + " " + str(k) + "\n"
+    n = int(max(re.findall('[0-9]+', cond)))
+    result = f"{n} {k}\n"
+    lines = [line.split("∧") for line in cond.split("∨")]
+    for line in lines:
+        line = [x[::-1].replace("X", "") for x in line]
+        line.sort()
 
-    var_pos = [key for key, value in vars.items() if value]
-    conjuctions = cond.split('∨')
-    dnf = []
+        if len(line) < n:
+            for i in range(1, n):
+                if str(i) not in line[i - 1]:
+                    line.insert(i - 1, "")
+            if str(n) not in line[-1]:
+                line.append("")
 
-    for con in conjuctions:
-        line = ['*'] * n
-        neg = False
-        for i in con:
-            if i == '¬':
-                neg = True
-                continue
-            if i in var_pos:
-                if not neg:
-                    line[var_pos.index(i)] = "1"
-                else:
-                    line[var_pos.index(i)] = "0"
-                neg = False
-        dnf.append(line.copy())
-
-    for line in dnf:
-        for symbol in line:
-            result += symbol
-        result += "\n"
-
+        for i, x in enumerate(line, start=1):
+            if str(i) in x and "¬" not in x:
+                result += '1'
+            elif str(i) in x and "¬" in x:
+                result += '0'
+            else:
+                result += '*'
+        result += '\n'
     return result
 
 
 def convert_answer(tupik_dnfs: list, n: int, k: int, cond: str):
-    n = 0
-    vars = {"X": 0, "Y": 0, "Z": 0, "T": 0}
-    for key, value in vars.items():
-        if cond.count(key):
-            vars[key] = cond.count(key)
-            n += 1
-    var_pos = [key for key, value in vars.items() if value]
     result = []
-    for tupik in tupik_dnfs:
-        dnf = ""
-        for line in tupik:
-            for i, element in enumerate(line):
-                if element == "1":
-                    dnf += var_pos[i]
-                elif element == "0":
-                    dnf += "¬" + var_pos[i]
-            dnf += "∨"
-        result.append(dnf[:-1])
+    for dnf in tupik_dnfs:
+        string = ""
+        for i, line in enumerate(dnf):
+            for j, x in enumerate(line, start=1):
+                if '1' in x:
+                    string += f"X{j}"
+                elif '0' in x:
+                    string += f"¬X{j}"
+                elif '*' in x:
+                    continue
+                else:
+                    raise ValueError
+
+                string += '∧'
+
+            string = string[:-1] + '∨'
+
+        result.append(string[:-1])
     return result
 
 
 
 
-def get_TDNF_result(cond: str):
-    a = reformat_cond(cond)
-    a = a.replace('\n', ' ', 1).replace('\n', '').split(' ')
-    dnf, n, k = parse_dnf(a)
-    base_vector = find_vector(dnf, n)
-    all_shorts = create_all_short_dnfs(dnf, k)
+def get_TDNF_result(cond: str): # cond = 'XY∨¬X∨Y'
+    a = reformat_cond(cond) # a = '2 3\n11\n0*\n*1\n'
+    a = a.replace('\n', ' ', 1).replace('\n', '').split(' ') # a = ['2', '3', '110**1']
+    dnf, n, k = parse_dnf(a) # dnf = [['1', '1'], ['0', '*'], ['*', '1']]
+    base_vector = find_vector(dnf, n) # base_vector = [1, 1, 0, 1]
+    all_shorts = create_all_short_dnfs(dnf, k) # all_shrots = [[['*', '1']], [['0', '*']], [['0', '*'], ['*', '1']], [['1', '1']], [['1', '1'], ['*', '1']], [['1', '1'], ['0', '*']]]
     all_shorts.sort(key=len)
-    minimal_dnfs = find_minimal_dnfs(all_shorts, n, base_vector)
-    tupik_dnfs = get_tupik_dnfs(minimal_dnfs)
-    result = convert_answer(tupik_dnfs, n, k, cond)
+    minimal_dnfs = find_minimal_dnfs(all_shorts, n, base_vector) # minimal_dnfs = [[['0', '*'], ['*', '1']], [['1', '1'], ['0', '*']]]
+    tupik_dnfs = get_tupik_dnfs(minimal_dnfs) # tupik_dnfs = [[['0', '*'], ['*', '1']], [['1', '1'], ['0', '*']]]
+    result = convert_answer(tupik_dnfs, n, k, cond) # result = ['¬X∨Y', 'XY∨¬X']
     return result

@@ -91,14 +91,15 @@
         <div class="row">
             <div class="col-lg-8 col-md-12 mx-auto">
                 <h1 class="fw-light">Алгебра логики</h1>
-                <!-- {#                <p class="lead text-muted">Теория кодирования - это изучение свойств кодов и их соответствующей#}
-{#                    пригодности для конкретных приложений. Коды используются для сжатия данных, криптографии,#}
-{#                    обнаружения и исправления ошибок, передачи и хранения данных.</p>#}
-{#                <p class="lead text-muted">В данном разделе были реализованы вычислители по следующим алгоритмам:</p>#}
-{#                <p class="lead text-muted" style="margin-bottom: 0">1) Коды с минимальной избыточностью(а точнее код#}
-{#                    Хаффмана)</p>#}
-{#                <p class="lead text-muted">2) Самокорректирующиеся коды Хэмминга</p>#}
-{#                <p class="lead text-muted">Для перехода на определённый вычислитель, выберите ниже нужный алгоритм</p>#} -->
+                              <p class="lead text-muted">Алгебра логики — раздел математической логики,
+                 в котором изучаются логические операции над высказываниями. Чаще всего предполагается,
+                 что высказывания могут быть только истинными или ложными, то есть используется так называемая
+                 бинарная или двоичная логика.</p>
+                <p class="lead text-muted" style="margin-bottom: 0"> В данном разделе были реализованы вычислители по следующим алгоритмам:</p>
+                <p class="lead text-muted" style="margin-bottom: 0">1) Тупиковая ДНФ</p>
+                <p class="lead text-muted" style="margin-bottom: 0">2) Сокращенная ДНФ</p>
+                <p class="lead text-muted" style="margin-bottom: 0">3) Эквивалентность</p>
+                <p class="lead text-muted" style="margin-bottom: 0">Для перехода на определённый вычислитель, выберите ниже нужный алгоритм</p>
             </div>
         </div>
     </section>
@@ -108,8 +109,7 @@
             <!-- code here -->
             <div class="album bg-light">
                 <div class="container">
-
-                    <div class="row row-cols-lg-2 row-cols-md-1 g-3">
+                    <div class="row row-cols-lg-3 row-cols-md-1 g-3">
                         <div class="col">
                             <a href="{% url 'TDNF' %}" class="just-link">
                                 <div class="card shadow-sm" style="height: 110px; line-height: 100px">
@@ -119,24 +119,24 @@
                                 </div>
                             </a>
                         </div>
-                        {#                        <div class="col">#}
-                        {#                            <a href="{% url 'hamming' %}" class="just-link">#}
-                        {#                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">#}
-                        {#                                    <div class="text-center">#}
-                        {#                                        <p class="blockquote">Эквивалентность</p>#}
-                        {#                                    </div>#}
-                        {#                                </div>#}
-                        {#                            </a>#}
-                        {#                        </div>#}
-                        {#                <div class="col">#}
-                        {#                    <a href="#" class="just-link">#}
-                        {#                        <div class="card shadow-sm" style="height: 110px; line-height: 100px">#}
-                        {#                            <div class="text-center">#}
-                        {#                                <p class="blockquote">Скоро...</p>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
-                        {#                    </a>#}
-                        {#                </div>#}
+                        <div class="col">
+                            <a href="#" class="just-link">
+                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
+                                    <div class="text-center">
+                                        <p class="blockquote">Сокращенная ДНФ</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="just-link">
+                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
+                                    <div class="text-center">
+                                        <p class="blockquote">Эквивалентность</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
