@@ -121,21 +121,29 @@ def reformat_cond(cond: str):
         line = [x[::-1].replace("X", "") for x in line]
         line.sort()
 
-        if len(line) < n:
-            for i in range(1, n):
-                if str(i) not in line[i - 1]:
-                    line.insert(i - 1, "")
-            if str(n) not in line[-1]:
-                line.append("")
+        # diff = n - len(line)
+        # if len(line) < n:
+        #     for i in range(len(line)):
+        #         if str(i + 1) not in line[i]:
+        #             line.insert(i, "")
+        #     if str(n) not in line[-1]:
+        #         line.append("")
 
-        for i, x in enumerate(line, start=1):
-            if str(i) in x and "¬" not in x:
-                result += '1'
-            elif str(i) in x and "¬" in x:
-                result += '0'
-            else:
-                result += '*'
+        mask = ['*'] * n
+        for i, x in enumerate(line):
+            mask[int(x[0]) - 1] = '0' if '¬' in x else '1'
+        str_line = ""
+        result += str_line.join([m for m in mask])
         result += '\n'
+
+        # for i, x in enumerate(mask, start=1):
+        #     if str(i) in x and "¬" not in x:
+        #         result += '1'
+        #     elif str(i) in x and "¬" in x:
+        #         result += '0'
+        #     else:
+        #         result += '*'
+
     return result
 
 
@@ -173,5 +181,8 @@ def get_TDNF_result(cond: str): # cond = 'XY∨¬X∨Y'
     all_shorts.sort(key=len)
     minimal_dnfs = find_minimal_dnfs(all_shorts, n, base_vector) # minimal_dnfs = [[['0', '*'], ['*', '1']], [['1', '1'], ['0', '*']]]
     tupik_dnfs = get_tupik_dnfs(minimal_dnfs) # tupik_dnfs = [[['0', '*'], ['*', '1']], [['1', '1'], ['0', '*']]]
-    result = convert_answer(tupik_dnfs, n, k, cond) # result = ['¬X∨Y', 'XY∨¬X']
+    if len(tupik_dnfs):
+        result = convert_answer(tupik_dnfs, n, k, cond) # result = ['¬X∨Y', 'XY∨¬X']
+    else:
+        result = convert_answer([dnf], n, k, cond)
     return result
