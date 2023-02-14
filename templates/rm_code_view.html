@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reed-Maller codes</title>
+    <script src="https://unpkg.com/mathjs@11.5.0/lib/browser/math.js" type="text/javascript"></script>
+
+    <style>
+        .matrix {
+            display: flex;
+            justify-content: space-between;
+            width: 150px;
+            padding: 20px;
+        }
+
+        .matrix-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .matrix-content {
+            border-right: 1px solid #000;
+            border-left: 1px solid #000;
+            padding: 0 5px 0 5px;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <form action="/rm_encoder/" method="POST">
+        {% csrf_token %}
+        <div><input id="m" type="number" placeholder="m" required name="m"></div>
+        <div><input id="sigma" type="number" placeholder="sigma" name="sigma"></div>
+        <div><input type="number" placeholder="Code" name="code" oninput="checkCodeLength(this)"></div>
+        <button id="submit-btn" type="submit" disabled>Get Code</button>
+    </form>
+    <div class="errors">
+    </div>
+    <div class="answer">
+        {% block answers %}
+        {% endblock %}
+    </div>
+</div>
+
+<script>
+    const csrfToken = Cookies.get('csrftoken');
+
+    function checkCodeLength(input) {
+
+        let code = input.value;
+        let str_code = code.toString();
+        let errorsBlock = document.querySelector('.errors');
+
+        let btn = document.getElementById('submit-btn');
+        let m = document.getElementById('m');
+        let sigma = document.getElementById('sigma');
+
+        for (let i = 0; i < str_code.length; i++) {
+            if (str_code[i] !== '1' && str_code[i] !== '0') {
+                btn.setAttribute('disabled', true);
+                errorsBlock.textContent = 'код должен быть двоичным';
+                break;
+            }
+        }
+
+        if (!m.value || !sigma.value) {
+            btn.setAttribute('disabled', true);
+            errorsBlock.textContent = 'незаполненые сигма или м';
+        } else {
+            m = Number(m.value);
+            sigma = Number(sigma.value);
+
+            if (m < 3 || sigma < 2 || sigma >= m) {
+                btn.setAttribute('disabled', true);
+                errorsBlock.textContent = 'неверные сигма или м';
+            } else {
+                let combNumber = 1 + m + math.combinations(m, sigma);
+                if (str_code.length !== combNumber) {
+                    btn.setAttribute('disabled', true);
+                    errorsBlock.textContent = `длина кода должна быть ${combNumber}`;
+                } else {
+                    errorsBlock.textContent = '';
+                    btn.removeAttribute('disabled');
+                }
+            }
+        }
+    }
+
+
+</script>
+</body>
+
+</html>

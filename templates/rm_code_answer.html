@@ -1,0 +1,32 @@
+{% extends 'rm_code_view.html' %}
+
+{% block answers %}
+    {% if answer %}
+        <hr>
+        <div>input: {{ input_data }}</div>
+
+        <div class="matrix">
+            <div class="matrix-title">
+                <div>
+                    <span>G = </span>
+                </div>
+            </div>
+            <div>
+                <div class="matrix-content">
+                    <table>
+                        {% for row in G %}
+                            <tr>
+                                {% for col in row %}
+                                    <td>{{ col }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div>output: {{ code }}</div>
+        <hr>
+    {% endif %}
+{% endblock %}

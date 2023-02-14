@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
+from django import forms
+
 from .forms import ConditionForm
-from algorithms import huffman_coder, hamming_coder, TDNF_coder
+from algorithms import huffman_coder, hamming_coder, TDNF_coder, rm_coder
+
+import json
 
 
 def index(request):
@@ -120,3 +124,44 @@ class TDNFView(generic.FormView):
 def do_TDNF(cond: str):
     result = str(TDNF_coder.get_TDNF_result(cond.strip()))
     return result
+
+
+# ==================================================================================================================== #
+class RmEncoderForm(forms.Form):
+    sigma = forms.IntegerField()
+    code = forms.IntegerField()
+    m = forms.IntegerField()
+
+
+def rm_encoder_view(request):
+    if request.method == 'GET':
+        return render(request, "rm_code_view.html", context={'answer': None})
+    elif request.method == 'POST':
+
+        form = RmEncoderForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            sigma = data['sigma']
+            m = data['m']
+
+            code = [int(i) for i in str(data['code'])]
+            try:
+                reedmaller_code, G = rm_coder.rm_code(code, m, sigma)
+
+                # answer = {
+                #    'input': f'm={m}; sigma={sigma}; ' + ''.join([str(i) for i in code]),
+                #    'code': ''.join([str(i) for i in reedmaller_code]),
+                #    'G': G
+                # }
+
+                context = dict(
+                    answer=True,
+                    input_data=f'm={m}; sigma={sigma}; ' + ''.join([str(i) for i in code]),
+                    code=''.join([str(i) for i in reedmaller_code]),
+                    G=G
+                )
+            except Exception as e:
+                context = dict()
+                print('there is an error')
+
+            return render(request, "rm_code_answer.html", context=context)
