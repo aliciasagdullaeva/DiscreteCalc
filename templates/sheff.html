@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Equality</title>
+    <link href="../static/style/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      .row button {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font: 16px Arial;
+        color: #007439;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+          <a
+            href="{% url 'main' %}"
+            class="navbar-brand d-flex align-items-center"
+          >
+            <strong>DisMath</strong>
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <strong>Ru</strong>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container pt-5">
+      <form action="/sheff/" method="post">
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col mx-5">
+            <div
+              class="border p-3 position-relative"
+              id="condition"
+              style="height: 100px"
+            >
+              <div class="position-absolute end-0" style="top: 35%; margin-right: 25px">
+                <button type="submit">=</button>
+              </div>
+            </div>
+            <input id="condition-input" type="hidden" name="condition" />
+
+            <div class="d-flex gap-2 mt-3">
+              <div class="d-flex flex-column gap-2">
+                <div>
+                  <button onclick="addChar('X'); event.preventDefault()">
+                    X
+                  </button>
+                  <button
+                    onclick="addChar('∧'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Конъюнкция"
+                  >
+                    ∧
+                  </button>
+                  <button
+                    onclick="addChar('∨'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Дизъюнкция"
+                  >
+                    ∨
+                  </button>
+                  <button
+                    onclick="addChar('¬'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Отрицание"
+                  >
+                    ¬
+                  </button>
+                  <button
+                    onclick="addChar('→'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Импликация"
+                  >
+                    &#x2192;
+                  </button>
+                  <button
+                    onclick="addChar('↔'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Эквивалентность"
+                  >
+                    &#x2194;
+                  </button>
+                  <button
+                    onclick="addChar('↓'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Стрелка Пирса"
+                  >
+                    &#x2193;
+                  </button>
+                  <button
+                    onclick="addChar('|'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Штрих Шеффера"
+                  >
+                    |
+                  </button>
+                  <button
+                    onclick="addChar('⊕'); event.preventDefault()"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="XOR"
+                  >
+                    &#8853;
+                  </button>
+                  <button onclick="addChar('('); event.preventDefault()">
+                    (
+                  </button>
+                  <button onclick="addChar(')'); event.preventDefault()">
+                    )
+                  </button>
+                </div>
+
+                <div>
+                  <button onclick="addChar('1'); event.preventDefault()">
+                    1
+                  </button>
+                  <button onclick="addChar('2'); event.preventDefault()">
+                    2
+                  </button>
+                  <button onclick="addChar('3'); event.preventDefault()">
+                    3
+                  </button>
+                  <button onclick="addChar('4'); event.preventDefault()">
+                    4
+                  </button>
+                  <button onclick="addChar('5'); event.preventDefault()">
+                    5
+                  </button>
+                  <button onclick="addChar('6'); event.preventDefault()">
+                    6
+                  </button>
+                  <button onclick="addChar('7'); event.preventDefault()">
+                    7
+                  </button>
+                  <button onclick="addChar('8'); event.preventDefault()">
+                    8
+                  </button>
+                  <button onclick="addChar('9'); event.preventDefault()">
+                    9
+                  </button>
+                  <button onclick="addChar('X'); event.preventDefault()">
+                    0
+                  </button>
+                </div>
+              </div>
+
+              <button
+                class="ms-auto"
+                onclick="removeLastItem(); event.preventDefault()"
+              >
+                🠐
+              </button>
+              <button onclick="clearInput(); event.preventDefault()">C</button>
+            </div>
+          </div>
+        </div>
+        {{ result }}
+          {{ condition }}
+      </form>
+    </div>
+    <script src="../static/style/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/style/js/popper.min.js"></script>
+    <script src="../static/style/js/sheff.js"></script>
+  </body>
+</html>

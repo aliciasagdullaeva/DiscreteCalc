@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import ConditionForm
-from algorithms import huffman_coder, hamming_coder, TDNF_coder, SokrDNF_coder
+from .forms import ConditionForm, EqualityForm, MonotoneForm, SelfDualityForm, SheffForm
+from algorithms import huffman_coder, hamming_coder, TDNF_coder, equality_coder, monotone_coder, get_vector, \
+    self_duality_coder, sheff_coder
 
 
 def index(request):
@@ -122,25 +123,79 @@ def do_TDNF(cond: str):
     return result
 
 
-class SokrDNFView(generic.FormView):
-    template_name = 'SokrDNF.html'
-    form_class = ConditionForm
-    success_url = '/SokrDNF/'
-    SokrDNF_context = dict()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['SokrDNF_context'] = self.SokrDNF_context
-        return context
-
-    def form_valid(self, form):
-        condition = form.data.get('condition')
-        if condition:
-            self.SokrDNF_context['condition'] = condition
-            self.SokrDNF_context['result'] = do_SokrDNF(condition)
-        return super().form_valid(form)
+def solve_equality(first_condition: str, second_condition: str):
+    return equality_coder.check_equivalence(first_condition, second_condition)
 
 
-def do_SokrDNF(cond: str):
-    result = str(SokrDNF_coder.get_SokrDNF_result(cond.strip()))
-    return result
+def equality(request):
+    first_expression = ''
+    second_expression = ''
+
+    result = ''
+    if request.method == 'POST':
+        form = EqualityForm(request.POST)
+        if form.is_valid():
+            first_expression = form.data.get('firstCondition')
+            second_expression = form.data.get('secondCondition')
+            result = solve_equality(first_expression, second_expression)
+            print(result)
+
+    return render(request, 'equality.html', {'result': result,
+                                             'first_expression': first_expression,
+                                             'second_expression': second_expression})
+
+
+def solve_monotone(condition: str):
+    vector = get_vector.dnf_vector(condition)
+    return monotone_coder.is_monotonic(vector)
+
+
+def monotone(request):
+    result = ''
+    condition = ''
+
+    if request.method == 'POST':
+        form = MonotoneForm(request.POST)
+        if form.is_valid():
+            condition = form.data.get('condition')
+            result = solve_monotone(condition)
+
+    return render(request, 'monotone.html', {'result': result, 'condition': condition})
+
+
+def solve_self_duality(condition: str):
+    vector = get_vector.dnf_vector(condition)
+
+    return sheff_coder.is_sheffer_function(vector)
+
+
+def self_duality(request):
+    result = ''
+    condition = ''
+
+    if request.method == 'POST':
+        form = (request.POST)
+        if form.is_valid():
+            condition = form.data.get('condition')
+            result = solve_self_duality(condition)
+
+    return render(request, 'self_duality.html', {'result': result, 'condition': condition})
+
+
+def solve_sheff(condition: str):
+    vector = get_vector.dnf_vector(condition)
+
+    return sheff_coder.is_sheffer_function(vector)
+
+
+def sheff(request):
+    result = ''
+    condition = ''
+
+    if request.method == 'POST':
+        form = SheffForm(request.POST)
+        if form.is_valid():
+            condition = form.data.get('condition')
+            result = solve_sheff(condition)
+
+    return render(request, 'sheff.html', {'result': result, 'condition': condition})

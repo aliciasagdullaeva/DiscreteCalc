@@ -44,6 +44,7 @@ function addChar(character) {
   characterNode.innerText += character;
   divRef.appendChild(characterNode);
   input.value += character;
+
 }
 
 const clearInput = () => {

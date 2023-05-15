@@ -27,7 +27,10 @@ urlpatterns = [
     path('huffman/', views.HuffmanView.as_view(), name='huffman'),
     path('hamming/', views.HammingView.as_view(), name='hamming'),
     path('TDNF/', views.TDNFView.as_view(), name='TDNF'),
-    path('SokrDNF/', views.SokrDNFView.as_view(), name='SokrDNF'),
-
+    path('equality/', views.equality, name='equality'),
+    path('monotone/', views.monotone, name='monotone'),
+    path('self-duality/', views.self_duality, name='self_duality'),
+    path('sheff/', views.sheff, name='sheff'),
 ]
+
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)
