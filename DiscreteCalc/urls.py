@@ -31,6 +31,7 @@ urlpatterns = [
     path('monotone/', views.monotone, name='monotone'),
     path('self-duality/', views.self_duality, name='self_duality'),
     path('sheff/', views.sheff, name='sheff'),
+    path('sokr-dnf/', views.sokr_dnf, name='sokr_dnf')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)

@@ -7,11 +7,11 @@
 
     <style>
       .row button {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
         cursor: pointer;
         font: 16px Arial;
-        color: #007439;
+        color: #0099cc;
       }
     </style>
   </head>
@@ -32,13 +32,35 @@
       </div>
     </header>
 
+    <section class="container py-5">
+        <a href="{% url 'logic' %}" class="link-secondary">  Назад </a>
+    </section>
+
+    <section class="py-5 text-center container">
+        <div class="row">
+          <div class="col-lg-8 col-md-12 mx-auto">
+            <h1 class="fw-light">Эквивалентность</h1>
+            <img src="../static/img/equality.jpg" class="img-fluid" />
+            <p class="lead text-muted" style="margin-bottom: 0"></p>
+          </div>
+        </div>
+      </section>
+
+    <section class="py-5 text-end container">
+      <div class="row">
+        <div class="col-lg-8 col-md-12 mx-auto">
+          <a href="https://stugum.files.wordpress.com/2014/03/yablonskiy-vvedenie-v-diskretnuyu-matematiku.pdf" target="_blank" class="fw-light link-info">Информация взята с учебника: Яблонский С. В. «Введение в дискретную математику»</a>
+        </div>
+      </div>
+    </section>
+
     <div class="container pt-5">
       <form action="/equality/" method="post">
         {% csrf_token %}
 
         <div class="row">
           {# FIRST CONDITION #}
-          <div class="col mx-5">
+          <div class="col-5 ">
             <div
               class="border p-3"
               id="first-condition"
@@ -172,8 +194,11 @@
             </div>
           </div>
 
+          <div class="col-2 my-auto d-flex justify-content-center">
+            <button class="w-100 mx-auto" type="submit">Эквивалентны?</button>
+          </div>
           {# SECOND CONDITION #}
-          <div class="col mx-5">
+          <div class="col-5">
             <div
               class="border p-3"
               style="height: 100px"
@@ -307,13 +332,30 @@
             </div>
           </div>
 
-          <div class="col my-auto">
-            <button type="submit">=</button>
+
+        </div>
+
+       <div class="row">
+           <div class="col ms-5 me-5 alert alert-secondary mt-4">
+            <div id="first-condition-result" class="d-none">{{ first_expression }}</div>
+            <div id="second-condition-result" class="d-none">{{ second_expression }}</div>
+
+            <div
+              id="condition-result-array"
+              class="alert alert-secondary d-none"
+            >
+            </div>
+            <div id="result" class="d-none">{{ result }}</div>
           </div>
         </div>
-        {{ result }} {{ first_expression }} {{ second_expression }}
+
       </form>
     </div>
+    <footer class="text-muted py-5">
+      <div class="container">
+        <p class="mb-1">Сайт находится в разработке!</p>
+      </div>
+    </footer>
     <script src="../static/style/js/bootstrap.bundle.min.js"></script>
     <script src="../static/style/js/popper.min.js"></script>
     <script src="../static/style/js/equality.js"></script>

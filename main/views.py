@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import ConditionForm, EqualityForm, MonotoneForm, SelfDualityForm, SheffForm
+from .forms import ConditionForm, EqualityForm, MonotoneForm, SelfDualityForm, SheffForm, SokrDNFForm
 from algorithms import huffman_coder, hamming_coder, TDNF_coder, equality_coder, monotone_coder, get_vector, \
-    self_duality_coder, sheff_coder
+    self_duality_coder, sheff_coder, ttg, SokrDNF_coder
 
 
 def index(request):
@@ -146,7 +146,7 @@ def equality(request):
 
 
 def solve_monotone(condition: str):
-    vector = get_vector.dnf_vector(condition)
+    vector = ttg.get_value_vector(condition)
     return monotone_coder.is_monotonic(vector)
 
 
@@ -164,9 +164,9 @@ def monotone(request):
 
 
 def solve_self_duality(condition: str):
-    vector = get_vector.dnf_vector(condition)
+    vector = ttg.get_value_vector(condition)
 
-    return sheff_coder.is_sheffer_function(vector)
+    return self_duality_coder.is_S(vector)
 
 
 def self_duality(request):
@@ -174,7 +174,7 @@ def self_duality(request):
     condition = ''
 
     if request.method == 'POST':
-        form = (request.POST)
+        form = SelfDualityForm(request.POST)
         if form.is_valid():
             condition = form.data.get('condition')
             result = solve_self_duality(condition)
@@ -183,7 +183,7 @@ def self_duality(request):
 
 
 def solve_sheff(condition: str):
-    vector = get_vector.dnf_vector(condition)
+    vector = ttg.get_value_vector(condition)
 
     return sheff_coder.is_sheffer_function(vector)
 
@@ -199,3 +199,24 @@ def sheff(request):
             result = solve_sheff(condition)
 
     return render(request, 'sheff.html', {'result': result, 'condition': condition})
+
+
+def solve_sokr_dnf(condition: str):
+    print(condition)
+    result = str(SokrDNF_coder.get_SokrDNF_result(condition.strip()))
+    print(result, '207 str')
+
+    return result
+
+
+def sokr_dnf(request):
+    result = ''
+    condition = ''
+
+    if request.method == 'POST':
+        form = SokrDNFForm(request.POST)
+        if form.is_valid():
+            condition = form.data.get('condition')
+            result = solve_sokr_dnf(condition)
+
+    return render(request, 'SokrDNF.html', {'result': result, 'condition': condition})

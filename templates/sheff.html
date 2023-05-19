@@ -7,11 +7,11 @@
 
     <style>
       .row button {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         cursor: pointer;
-        font: 16px Arial;
-        color: #007439;
+        font: 24px Arial;
+        color: #0099cc;
       }
     </style>
   </head>
@@ -32,6 +32,28 @@
       </div>
     </header>
 
+    <section class="container py-5">
+        <a href="{% url 'logic' %}" class="link-secondary">  Назад </a>
+    </section>
+
+    <section class="py-5 text-center container">
+        <div class="row">
+          <div class="col-lg-8 col-md-12 mx-auto">
+            <h1 class="fw-light">Шефферовость</h1>
+            <img src="../static/img/sheffer.jpg" class="img-fluid" />
+            <p class="lead text-muted" style="margin-bottom: 0"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5 text-end container">
+        <div class="row">
+          <div class="col-lg-8 col-md-12 mx-auto">
+            <a href="http://edu.math.msu.ru/netcat_files/userfiles/edu/1_kurs/theorydiscretfunctions/Gavrilov_Zadachi_uprazhnenija_diskretnoj_matematike.pdf" target="_blank" class="fw-light link-info">Информация взята с учебника: Г. П. Гаврилов, А. А. Сапоженко - «Задачи и упражнения по дискретной математике»</a>
+          </div>
+        </div>
+      </section>
+
     <div class="container pt-5">
       <form action="/sheff/" method="post">
         {% csrf_token %}
@@ -43,6 +65,7 @@
               id="condition"
               style="height: 100px"
             >
+              <div id="conditionTextArea" class="pr-5"></div>
               <div class="position-absolute end-0" style="top: 35%; margin-right: 25px">
                 <button type="submit">=</button>
               </div>
@@ -171,10 +194,26 @@
             </div>
           </div>
         </div>
-        {{ result }}
-          {{ condition }}
+        <div class="row">
+          <div class="col ms-5 me-5 mt-4">
+            <div id="condition-result" class="d-none">{{ condition }}</div>
+            <div
+              id="condition-result-array"
+              class="alert alert-secondary d-none"
+            >
+            </div>
+            <div id="result" class="d-none">{{ result }}</div>
+          </div>
+        </div>
       </form>
     </div>
+
+    <footer class="text-muted py-5">
+      <div class="container">
+        <p class="mb-1">Сайт находится в разработке!</p>
+      </div>
+    </footer>
+
     <script src="../static/style/js/bootstrap.bundle.min.js"></script>
     <script src="../static/style/js/popper.min.js"></script>
     <script src="../static/style/js/sheff.js"></script>

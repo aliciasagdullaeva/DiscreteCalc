@@ -1,10 +1,8 @@
 import itertools
+import re
 from distutils.util import strtobool
 
 import pyparsing
-
-import re
-
 
 # dict of boolean operations
 OPERATIONS = {
@@ -28,6 +26,13 @@ OPERATIONS = {
 
 
 def replace_boolean_operators(expr):
+    # Add "and" between variables written together
+    expr = re.sub(r'([a-zA-Z][0-9])(?=[a-zA-Z][0-9])', r'\1 ∧ ', expr)
+
+    # Add "and" between a variable and a negation
+    expr = re.sub(r'([a-zA-Z][0-9])¬', r'\1 ∧ ¬', expr)
+
+
     mapping = {
         '∧': ' and ',
         '∨': ' or ',
@@ -196,10 +201,6 @@ class Truths:
 
         # add the bases and evaluated phrases to create a single row
         result = solve_phrase(interpreted)
-
-        if result is None:
-            return "Введено неправильное логическое выражение"
-
         if self.ints:
             result = int(result)
         return result

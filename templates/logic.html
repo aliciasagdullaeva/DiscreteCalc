@@ -1,189 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Discrete Calc - Logic</title>
-    <link href="../static/style/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/style/css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
 
-        a.just-link {
-            color: black;
-            text-decoration: none;
-        }
+      a.just-link {
+          color: black;
+          text-decoration: none;
+      }
 
-        a.just-link > div:hover {
-            background-color: lightgrey;
-        {#color: white;#}
-        }
+      a.just-link > div:hover {
+          background-color: lightgrey;
+      {#color: white;#}
+      }
 
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
+      .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+      }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
+      @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+              font-size: 3.5rem;
+          }
+      }
 
-        .b-example-divider {
-            height: 3rem;
-            background-color: rgba(0, 0, 0, .1);
-            border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-        }
+      .b-example-divider {
+          height: 3rem;
+          background-color: rgba(0, 0, 0, .1);
+          border: solid rgba(0, 0, 0, .15);
+          border-width: 1px 0;
+          box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
 
-        .b-example-vr {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 100vh;
-        }
+      .b-example-vr {
+          flex-shrink: 0;
+          width: 1.5rem;
+          height: 100vh;
+      }
 
-        .bi {
-            vertical-align: -.125em;
-            fill: currentColor;
-        }
+      .bi {
+          vertical-align: -.125em;
+          fill: currentColor;
+      }
 
-        .nav-scroller {
-            position: relative;
-            z-index: 2;
-            height: 2.75rem;
-            overflow-y: hidden;
-        }
+      .nav-scroller {
+          position: relative;
+          z-index: 2;
+          height: 2.75rem;
+          overflow-y: hidden;
+      }
 
-        .nav-scroller .nav {
-            display: flex;
-            flex-wrap: nowrap;
-            padding-bottom: 1rem;
-            margin-top: -1px;
-            overflow-x: auto;
-            text-align: center;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
+      .nav-scroller .nav {
+          display: flex;
+          flex-wrap: nowrap;
+          padding-bottom: 1rem;
+          margin-top: -1px;
+          overflow-x: auto;
+          text-align: center;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+      }
     </style>
-
-</head>
-<body>
-<header>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
+  </head>
+  <body>
+    <header>
+      <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a
-                    href="{% url 'main' %}"
-                    class="navbar-brand d-flex align-items-center"
-            >
-                <strong>DisMath</strong>
-            </a>
-            <button type="button" class="btn btn-secondary">
-                <strong>Ru</strong>
-            </button>
+          <a
+            href="{% url 'main' %}"
+            class="navbar-brand d-flex align-items-center"
+          >
+            <strong>DisMath</strong>
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <strong>Ru</strong>
+          </button>
         </div>
-    </div>
-</header>
+      </div>
+    </header>
 
-<main>
-    <section class="py-5 text-center container">
-        <div class="row">
-            <div class="col-lg-8 col-md-12 mx-auto">
-                <h1 class="fw-light">Алгебра логики</h1>
-                              <p class="lead text-muted">Алгебра логики — раздел математической логики,
-                 в котором изучаются логические операции над высказываниями. Чаще всего предполагается,
-                 что высказывания могут быть только истинными или ложными, то есть используется так называемая
-                 бинарная или двоичная логика.</p>
-                <p class="lead text-muted" style="margin-bottom: 0"> В данном разделе были реализованы вычислители по следующим алгоритмам:</p>
-                <p class="lead text-muted" style="margin-bottom: 0">1) Тупиковая ДНФ</p>
-                <p class="lead text-muted" style="margin-bottom: 0">2) Сокращенная ДНФ</p>
-                <p class="lead text-muted" style="margin-bottom: 0">3) Эквивалентность</p>
-                <p class="lead text-muted" style="margin-bottom: 0">Для перехода на определённый вычислитель, выберите ниже нужный алгоритм</p>
-            </div>
-        </div>
+    <section class="container py-5">
+        <a href="{% url 'main' %}" class="link-secondary">  Назад </a>
     </section>
 
-    <div class="album bg-light">
-        <div class="container">
-            <!-- code here -->
-            <div class="album bg-light">
-                <div class="container">
-                    <div class="row row-cols-lg-3 row-cols-md-1 g-3">
-                        <div class="col">
-                            <a href="{% url 'TDNF' %}" class="just-link">
-                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
-                                    <div class="text-center">
-                                        <p class="blockquote">Тупиковая ДНФ</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="#" class="just-link">
-                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
-                                    <div class="text-center">
-                                        <p class="blockquote">Сокращенная ДНФ</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="{%  url 'equality' %}" class="just-link">
-                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
-                                    <div class="text-center">
-                                        <p class="blockquote">Эквивалентность</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col">
-                            <a href="{% url 'sheff' %}" class="just-link">
-                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
-                                    <div class="text-center">
-                                        <p class="blockquote">Шефферовесть</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="{% url 'self_duality' %}" class="just-link">
-                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
-                                    <div class="text-center">
-                                        <p class="blockquote">Самодвойственность</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="{%  url 'monotone' %}" class="just-link">
-                                <div class="card shadow-sm" style="height: 110px; line-height: 100px">
-                                    <div class="text-center">
-                                        <p class="blockquote">Монотонность</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+    <main>
+      <section class="py-5 text-center container">
+        <div class="row">
+          <div class="col-lg-8 col-md-12 mx-auto">
+            <h1 class="fw-light">Алгебра логики</h1>
+            <p class="lead text-muted">
+              Алгебра логики — раздел математической логики, в котором изучаются
+              логические операции над высказываниями. Чаще всего предполагается,
+              что высказывания могут быть только истинными или ложными, то есть
+              используется так называемая бинарная или двоичная логика.
+            </p>
+{#            <p class="lead text-muted" style="margin-bottom: 0">#}
+{#              В данном разделе были реализованы вычислители по следующим#}
+{#              алгоритмам:#}
+{#            </p>#}
+{#            <p class="lead text-muted" style="margin-bottom: 0">#}
+{#              1) Тупиковая ДНФ#}
+{#            </p>#}
+{#            <p class="lead text-muted" style="margin-bottom: 0">#}
+{#              2) Сокращенная ДНФ#}
+{#            </p>#}
+{#            <p class="lead text-muted" style="margin-bottom: 0">#}
+{#              3) Эквивалентность#}
+{#            </p>#}
+            <p class="lead text-muted" style="margin-bottom: 0">
+              Для перехода на определённый вычислитель, выберите ниже нужный
+              алгоритм
+            </p>
+          </div>
         </div>
-    </div>
-</main>
+      </section>
 
-<footer class="text-muted py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <input type="button" onclick="history.back();" value="Назад"  class="link-secondary"/>
-{#            <a href="#" class="link-secondary">Контакты</a>#}
-        </p>
+      <div class="album bg-light">
+        <div class="container">
+          <!-- code here -->
+          <div class="album bg-light">
+            <div class="container">
+              <div class="row row-cols-lg-3 row-cols-md-1 g-3">
+                <div class="col">
+                  <a href="{% url 'TDNF' %}" class="just-link">
+                    <div
+                      class="card shadow-sm border-primary border-opacity-50"
+                      style="height: 110px; line-height: 100px"
+                    >
+                      <div class="text-center">
+                        <p class="blockquote">Тупиковая ДНФ</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col">
+                  <a href="{% url 'sokr_dnf' %}" class="just-link">
+                    <div
+                      class="card shadow-sm border-primary border-opacity-50"
+                      style="height: 110px; line-height: 100px"
+                    >
+                      <div class="text-center">
+                        <p class="blockquote">Сокращенная ДНФ</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col">
+                  <a href="{%  url 'equality' %}" class="just-link">
+                    <div
+                      class="card shadow-sm border-primary border-opacity-50"
+                      style="height: 110px; line-height: 100px"
+                    >
+                      <div class="text-center">
+                        <p class="blockquote">Эквивалентность</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="col">
+                  <a href="{% url 'sheff' %}" class="just-link">
+                    <div
+                      class="card shadow-sm border-primary border-opacity-50"
+                      style="height: 110px; line-height: 100px"
+                    >
+                      <div class="text-center">
+                        <p class="blockquote">Шефферовость</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col">
+                  <a href="{% url 'self_duality' %}" class="just-link">
+                    <div
+                      class="card shadow-sm border-primary border-opacity-50"
+                      style="height: 110px; line-height: 100px"
+                    >
+                      <div class="text-center">
+                        <p class="blockquote">Самодвойственность</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col">
+                  <a href="{%  url 'monotone' %}" class="just-link">
+                    <div
+                      class="card shadow-sm border-primary border-opacity-50"
+                      style="height: 110px; line-height: 100px"
+                    >
+                      <div class="text-center">
+                        <p class="blockquote">Монотонность</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-muted py-5">
+      <div class="container">
         <p class="mb-1">Сайт находится в разработке!</p>
-    </div>
-</footer>
+      </div>
+    </footer>
 
-<script src="../static/style/js/bootstrap.bundle.min.js"></script>
-<script src="../static/style/js/logic_calc.js"></script>
-</body>
+    <script src="../static/style/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/style/js/logic_calc.js"></script>
+  </body>
 </html>

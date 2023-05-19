@@ -26,3 +26,7 @@ class SelfDualityForm(forms.Form):
 
 class SheffForm(forms.Form):
     condition = forms.CharField(label='condition', max_length=255)
+
+
+class SokrDNFForm(forms.Form):
+    condition = forms.CharField(label='condition', max_length=255)

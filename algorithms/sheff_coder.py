@@ -1,22 +1,29 @@
 import math
 
 
-def is_sheffer_function(vector):
+def is_TO(vector):
+    return vector[0] == 0
+
+
+def is_T1(vector):
+    return vector[-1] == 1
+
+
+def is_S(vector):
     n = len(vector)
-    num_vars = int(math.log2(n))
-
-    # Проверка T0
-    if not vector[0] is False:
-        return False
-
-    # Проверка T1
-    if vector[-1] is True:
-        return False
-
-    # Проверка S (самодвойственность)
     for i in range(n // 2):
         if vector[i] == vector[n - i - 1]:
             return False
+    return True
+
+
+def is_sheffer_function(vector):
+    print(vector)
+    print(is_TO(vector))
+    print(is_T1(vector))
+    print(is_S(vector))
+    print(not is_TO(vector) and not is_T1(vector) and not is_S(vector))
+    return not is_TO(vector) and not is_T1(vector) and not is_S(vector)
 
     # Проверка M (монотонность)
 
