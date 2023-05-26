@@ -11,9 +11,8 @@ def is_power_of_two(num):
 
 def pascal_triangle(vector):
     result = []
-    vector = list(vector)
-    print(vector)
-    result.append(vector[0])
+    # print(vector)
+    result.append(int(vector[0]))
     new_vector = []
     while(True):
         new_vector = []
@@ -28,6 +27,7 @@ def pascal_triangle(vector):
     return result
 
 def build_zhegalkin_polynomial(vector):
+    vector = list(vector)
     vector = pascal_triangle(vector)
     n = is_power_of_two(len(vector))  # Длина вектора значений
     variables = ['X' + str(i + 1) for i in range(n)]  # Генерируем список переменных x1, x2, x3, ...
