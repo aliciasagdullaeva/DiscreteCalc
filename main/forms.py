@@ -28,5 +28,5 @@ class SheffForm(forms.Form):
     condition = forms.CharField(label='condition', max_length=255)
 
 
-class SokrDNFForm(forms.Form):
+class PolynomForm(forms.Form):
     condition = forms.CharField(label='condition', max_length=255)

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import ConditionForm, EqualityForm, MonotoneForm, SelfDualityForm, SheffForm, SokrDNFForm
+from .forms import ConditionForm, EqualityForm, MonotoneForm, SelfDualityForm, SheffForm, PolynomForm
 from algorithms import huffman_coder, hamming_coder, TDNF_coder, equality_coder, monotone_coder, get_vector, \
-    self_duality_coder, sheff_coder, ttg, SokrDNF_coder
+    self_duality_coder, sheff_coder, ttg, polynom_coder
 
 
 def index(request):
@@ -201,22 +201,22 @@ def sheff(request):
     return render(request, 'sheff.html', {'result': result, 'condition': condition})
 
 
-def solve_sokr_dnf(condition: str):
+def solve_polynom(condition: str):
     print(condition)
-    result = str(SokrDNF_coder.get_SokrDNF_result(condition.strip()))
+    result = str(polynom_coder.build_zhegalkin_polynomial(condition.strip()))
     print(result, '207 str')
 
     return result
 
 
-def sokr_dnf(request):
+def polynom(request):
     result = ''
     condition = ''
 
     if request.method == 'POST':
-        form = SokrDNFForm(request.POST)
+        form = PolynomForm(request.POST)
         if form.is_valid():
             condition = form.data.get('condition')
-            result = solve_sokr_dnf(condition)
+            result = solve_polynom(condition)
 
-    return render(request, 'SokrDNF.html', {'result': result, 'condition': condition})
+    return render(request, 'polynom.html', {'result': result, 'condition': condition})
